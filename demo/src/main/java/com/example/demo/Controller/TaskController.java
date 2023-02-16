@@ -1,15 +1,13 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Models.Task;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @RestController
 public class TaskController {
@@ -32,5 +30,17 @@ public class TaskController {
         Task newTask = new Task(taskId.incrementAndGet(), task.getTask(), task.getCreateDate());
         taskList.add(newTask);
         return newTask;
+    }
+
+    @GetMapping("/getById/{id}")
+    Task getTaskById(@PathVariable Integer id){
+        return taskList.stream().filter(c-> c.getId() == id).collect(Collectors.toList()).get(0);
+    }
+
+
+    @PatchMapping("/taskupdate/{id}")
+    Task updateTask(@PathVariable Integer id, @RequestBody Task task){
+//        var UpdatedTask = new Task()
+        return null;
     }
 }
